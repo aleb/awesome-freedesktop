@@ -65,11 +65,6 @@ function new(arg)
         end
     end
 
-    -- sort each submenu alphabetically case insensitive
-    for k, v in pairs(programs) do
-        table.sort(v, function(a, b) return a[1]:lower() < b[1]:lower() end)
-    end
-
     local menu = {
         { "Accessories", programs["Utility"], utils.lookup_icon({ icon = 'applications-accessories.png' }) },
         { "Development", programs["Development"], utils.lookup_icon({ icon = 'applications-development.png' }) },
@@ -87,10 +82,16 @@ function new(arg)
     -- Removing empty entries from menu
     local cleanedMenu  = {}
     for index, item in ipairs(menu) do
-	itemTester = item[2]
+        itemTester = item[2]
         if itemTester[1] then
             table.insert(cleanedMenu, item)
         end
+    end
+
+    -- sort each submenu alphabetically case insensitive
+    for index, item in ipairs(cleanedMenu) do
+        programsList = item[2]
+        table.sort(programsList, function(a, b) return a[1]:lower() < b[1]:lower() end)
     end
 
     return cleanedMenu
